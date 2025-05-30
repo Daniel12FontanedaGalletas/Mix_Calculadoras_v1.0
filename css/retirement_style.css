@@ -56,8 +56,10 @@ body {
     border: var(--main-container-border-width) solid var(--text-red);
     border-bottom: none; 
     position: relative; 
-    
+    /* overflow: hidden; */ 
     margin: 0 auto; 
+    
+    /* Sin escalado */
 }
 
 .calculator-title-header {
@@ -88,7 +90,7 @@ body {
     gap: 22px; 
     align-items: flex-start; 
     margin-bottom: 0; 
-    padding-bottom: 260px; 
+    padding-bottom: 200px; /* REDUCIDO para subir un poco el footer */
 }
 
 .form-section {
@@ -98,6 +100,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 13px; 
+    position: relative; 
+    z-index: 6;         
 }
 
 .right-column-container {
@@ -291,6 +295,7 @@ input[type="range"]::-moz-range-thumb {
     border-bottom-right-radius: var(--main-container-border-radius);
 }
 
+/* Media Queries originales */
 @media (max-width: 1200px) {
     .calculator-layout {
         flex-direction: column; 
