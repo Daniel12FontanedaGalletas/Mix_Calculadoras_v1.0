@@ -1,3 +1,4 @@
+/* css/mortgage_style.css */
 :root {
     --primary-bg: #fff9e6;
     --house-blue: #2a5270;
@@ -39,20 +40,17 @@ body {
     width: 100%;
     max-width: 1150px;
     border: 3px solid var(--text-red);
-    /* Nuevas propiedades para escalar: */
-    transform: scale(0.9);
-    transform-origin: top; /* Escala desde el borde superior */
-    /* Puede que sea necesario ajustar márgenes si el escalado afecta la posición global, */
-    /* pero con `transform-origin: top` y el centrado del body del iframe, debería ir bien. */
+
 }
+
 .calculator-title-header {
     text-align: center;
     margin-bottom: 30px;
     background-color: #fff5ee;
     padding: 15px 20px;
-    margin-left: -3px; /* Adjusted to account for border if main-container has one */
-    margin-right: -3px; /* Adjusted to account for border if main-container has one */
-    margin-top: -3px; /* Adjusted to account for border if main-container has one */
+    margin-left: -3px; 
+    margin-right: -3px; 
+    margin-top: -3px; 
 }
 
 .calculator-title-header h1 {
@@ -73,8 +71,8 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
-    align-items: center; /* Changed from flex-start for better centering within iframe */
-    justify-content: center; /* Added for better centering */
+    align-items: center; 
+    justify-content: center; 
 }
 
 .form-section {
@@ -257,7 +255,7 @@ input[type="range"]::-moz-range-thumb {
     width: 100%;
     max-width: 700px;
     aspect-ratio: 400 / 460;
-    background-image: url('../images/casa2.png'); /* This path should work if images/ is at root and css/ is at root */
+    background-image: url('../images/casa2.png'); 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
@@ -348,10 +346,9 @@ input[type="range"]::-moz-range-thumb {
     height: 15%;
 }
 
-/* Heart Animation */
 .heart-particle {
     position: absolute;
-    background-image: url('../images/unnamed.png'); /* Make sure unnamed.png is also in images/ folder if used */
+    background-image: url('../images/unnamed.png'); 
     background-size: contain;
     background-repeat: no-repeat;
     width: 45px;
@@ -383,7 +380,7 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 1200px) {
     .main-container {
         padding: 20px;
-        max-width: 95%; /* Adjusted for iframe scenarios */
+        max-width: 95%; 
     }
     .calculator-layout {
         flex-direction: column;
@@ -454,11 +451,11 @@ input[type="range"]::-moz-range-thumb {
     #chimney-area { top: 5%; left: 69.5%; width: 7%; height: 6%; }
 
     .house-result-title {
-        font-size: 0.55em; /* Adjusted to fit if needed */
+        font-size: 0.55em; 
         top: 25%; width: 44%; line-height: 1.1;
     }
     .house-result-monthly, .house-result-interest, .house-result-total {
-        font-size: 0.5em; /* Adjusted to fit if needed */
+        font-size: 0.5em; 
         line-height: 1.1;
     }
     .house-result-monthly { top: 47%; left: 33.5%; width: 34%; height: 12%;}

@@ -9,22 +9,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (element.type === 'range') {
                 input.value = val;
             } else {
-                // Ensure input value doesn't exceed range's min/max if manually typed
+                
                 let numVal = parseFloat(val);
                 const min = parseFloat(range.min);
                 const max = parseFloat(range.max);
                 if (numVal < min) { numVal = min; input.value = min; }
                 if (numVal > max) { numVal = max; input.value = max; }
-                range.value = numVal; // Use potentially corrected value
+                range.value = numVal; 
             }
-            const numValue = parseFloat(input.value); // Use input's value for display
+            const numValue = parseFloat(input.value); 
             valueSpan.textContent = numValue.toLocaleString('es-ES', { minimumFractionDigits: precision, maximumFractionDigits: precision }) + unit;
         };
 
         input.addEventListener('input', () => updateValue(input));
         range.addEventListener('input', () => updateValue(range));
         
-        // Initial sync
         let initialVal = parseFloat(input.value);
         const min = parseFloat(input.min);
         const max = parseFloat(input.max);
@@ -102,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const yearsToRetirement = desiredRetirementAge - currentAge;
             let totalSavingsAtRetirement = initialSavings;
 
-            // Calculate savings accumulation
             if (yearsToRetirement > 0) {
                  totalSavingsAtRetirement = initialSavings * Math.pow(1 + preRetirementInterestRate, yearsToRetirement);
                  if (preRetirementInterestRate === 0) {
@@ -110,15 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
                  } else {
                      totalSavingsAtRetirement += annualContribution * ((Math.pow(1 + preRetirementInterestRate, yearsToRetirement) - 1) / preRetirementInterestRate) * (1 + preRetirementInterestRate); // Assuming end-of-year contributions with growth
                  }
-            } else { // Retiring now or current age is retirement age
-                 totalSavingsAtRetirement = initialSavings; // No further contributions or growth if retiring immediately
+            } else { 
+                 totalSavingsAtRetirement = initialSavings; 
             }
 
 
             let monthlyIncome = 0;
             let finalCapitalDepletionYears = 0;
             
-            if (yearsOfEnjoyment > 0 && totalSavingsAtRetirement > 0.005) { // Check for minimal savings
+            if (yearsOfEnjoyment > 0 && totalSavingsAtRetirement > 0.005) { 
                 const n_months_enjoyment = yearsOfEnjoyment * 12;
                 const i_monthly_post = postRetirementInterestRate / 12;
 
@@ -126,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     monthlyIncome = totalSavingsAtRetirement / n_months_enjoyment;
                 } else {
                     const compoundFactor = Math.pow(1 + i_monthly_post, n_months_enjoyment);
-                    if (compoundFactor === 1) { // Should be caught by i_monthly_post === 0, but good fallback
+                    if (compoundFactor === 1) {
                          monthlyIncome = totalSavingsAtRetirement / n_months_enjoyment;
                     } else {
                         monthlyIncome = (totalSavingsAtRetirement * i_monthly_post * compoundFactor) / (compoundFactor - 1);
@@ -139,11 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Calculate how long capital lasts
                 let tempCapital = totalSavingsAtRetirement;
                 let monthsLasted = 0;
-                if (monthlyIncome > 0.005) { // Only simulate if there's income to withdraw
-                    const max_simulation_months = Math.max(n_months_enjoyment * 2, 12 * 150); // Simulate for longer if needed, up to 150 years
+                if (monthlyIncome > 0.005) { 
+                    const max_simulation_months = Math.max(n_months_enjoyment * 2, 12 * 150); 
                     while (tempCapital > 0.005 && monthsLasted < max_simulation_months) { 
                         tempCapital = tempCapital * (1 + i_monthly_post) - monthlyIncome;
-                        if (tempCapital >= -0.005) { // Allow for very small negative due to precision
+                        if (tempCapital >= -0.005) { 
                             monthsLasted++;
                         } else { 
                             break; 
@@ -151,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     finalCapitalDepletionYears = monthsLasted / 12;
 
-                    // Fine-tune if it's very close to yearsOfEnjoyment due to calculation precision
                      if (postRetirementInterestRate > 0 && Math.abs(finalCapitalDepletionYears - yearsOfEnjoyment) < 0.1 && finalCapitalDepletionYears > yearsOfEnjoyment) {
                          let capitalCheck = totalSavingsAtRetirement;
                          for (let m = 0; m < n_months_enjoyment; m++) {
@@ -162,20 +159,20 @@ document.addEventListener('DOMContentLoaded', () => {
                          }
                      }
 
-                } else if (totalSavingsAtRetirement <= 0.005) { // No savings
+                } else if (totalSavingsAtRetirement <= 0.005) { 
                     monthlyIncome = 0;
                     finalCapitalDepletionYears = 0;
-                } else { // Savings exist, but calculated monthly income is effectively zero (e.g. negative interest not accounted for withdrawal)
-                    finalCapitalDepletionYears = Infinity; // Capital won't deplete through withdrawal
+                } else { 
+                    finalCapitalDepletionYears = Infinity; 
                 }
 
-            } else if (totalSavingsAtRetirement <= 0.005) { // No savings at all
+            } else if (totalSavingsAtRetirement <= 0.005) { 
                 monthlyIncome = 0;
                 finalCapitalDepletionYears = 0;
             }
-             else { // yearsOfEnjoyment is 0 or less, or no savings
+             else {
                 monthlyIncome = 0;
-                finalCapitalDepletionYears = (totalSavingsAtRetirement > 0.005) ? Infinity : 0; // If savings, it lasts "forever" as not withdrawn
+                finalCapitalDepletionYears = (totalSavingsAtRetirement > 0.005) ? Infinity : 0; 
             }
 
             totalSavingsSpan.textContent = totalSavingsAtRetirement.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });

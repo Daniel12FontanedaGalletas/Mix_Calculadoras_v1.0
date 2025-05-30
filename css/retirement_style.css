@@ -56,11 +56,8 @@ body {
     border: var(--main-container-border-width) solid var(--text-red);
     border-bottom: none; 
     position: relative; 
-    /* overflow: hidden; */ /* Mantenido comentado como en la última versión */
-    margin: 0 auto; 
     
-    /* transform: scale(0.9); */ /* Sin escalado, como en la última versión */
-    /* transform-origin: top; */
+    margin: 0 auto; 
 }
 
 .calculator-title-header {
@@ -278,9 +275,8 @@ input[type="range"]::-moz-range-thumb {
 .calculator-brand-footer {
     position: absolute;
     bottom: 0;
-    left: 0; /* AJUSTADO: Alinea con el borde izquierdo del área de padding del .main-container */
-    right: 0; /* AJUSTADO: Alinea con el borde derecho del área de padding del .main-container */
-    /* La imagen interior (width: 100%) llenará este espacio. */
+    left: 0; 
+    right: 0; 
     padding: 0;
     margin: 0;
     line-height: 0; 
@@ -293,12 +289,8 @@ input[type="range"]::-moz-range-thumb {
     display: block; 
     border-bottom-left-radius: var(--main-container-border-radius); 
     border-bottom-right-radius: var(--main-container-border-radius);
-    /* Si el footer ahora es más estrecho que el .main-container, puede que quieras que los radios de la imagen sean 0 */
-    /* o que coincidan con los radios del .main-container si la imagen se extiende a los bordes del padding. */
-    /* De momento, mantenemos los radios originales de la imagen. */
 }
 
-/* Media Queries originales */
 @media (max-width: 1200px) {
     .calculator-layout {
         flex-direction: column; 

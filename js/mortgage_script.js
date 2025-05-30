@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (max !== undefined && valToSyncNum > max) valToSyncNum = max;
         
         inputEl.value = valToSyncNum;
-        inputEl.dispatchEvent(new Event('input')); // Trigger initial sync
+        inputEl.dispatchEvent(new Event('input'));
     }
 
     syncSlider(propertyPriceInput, propertyPriceRange, propertyPriceValueSpan, ' €', 0); 
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (hasSecondaryInterestCheckbox.checked) {
             secondaryInterestBlock.style.display = 'block';
             changePeriodBlock.style.display = 'block';
-            // Re-initialize sliders if they were hidden
+           
             if (secondaryInterestRateInput && secondaryInterestRateRange && secondaryInterestRateValueSpan) {
                  syncSlider(secondaryInterestRateInput, secondaryInterestRateRange, secondaryInterestRateValueSpan, ' %', 2);
             }
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             changePeriodBlock.style.display = 'none';
         }
     });
-    hasSecondaryInterestCheckbox.dispatchEvent(new Event('change')); // Initial setup
+    hasSecondaryInterestCheckbox.dispatchEvent(new Event('change')); 
 
     mortgageForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -192,24 +192,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        if (P <= 0) { // If down payment covers the whole price or more
-            // Clarification: if P < 0, it means downPayment > propertyPrice, already handled.
-            // So this handles P === 0.
-            if (P < 0) { // Should not happen due to above check, but as a safeguard.
+        if (P <= 0) { 
+           
+            if (P < 0) { 
                  alert('Error en el cálculo del préstamo. Revise el precio del inmueble y la entrada.');
                  return;
             }
-            // If P === 0, it means the property is fully paid by the down payment.
-            // No loan needed.
+            
             monthlyPaymentSpan.innerHTML = '0.00&nbsp;€';
             totalInterestSpan.innerHTML = '0.00&nbsp;€';
-            totalCostSpan.innerHTML = '0.00&nbsp;€'; // Cost of loan is 0. Total cost of property is propertyPrice.
-            if (chimneyArea) createHeartExplosion(); // Or maybe not if P=0
+            totalCostSpan.innerHTML = '0.00&nbsp;€'; 
+            if (chimneyArea) createHeartExplosion(); 
             return; 
         }
 
 
-        if (isNaN(i_annual) || i_annual < 0) { // Allow 0 interest
+        if (isNaN(i_annual) || i_annual < 0) { 
              alert('Por favor, introduce un tipo de interés anual válido (0 o mayor).');
             interestRateInput.focus();
             return;
@@ -224,13 +222,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalInterest = 0;
         let totalCost = 0; 
 
-        if (P === 0) { // This case is handled above, but good to be explicit
+        if (P === 0) { 
             monthlyPayment = 0;
             totalInterest = 0;
             totalCost = 0; 
         } else if (!hasSecondaryInterestCheckbox.checked) { 
             const i_monthly = i_annual / 12;
-            if (i_annual === 0) { // 0% interest rate
+            if (i_annual === 0) {
                 monthlyPayment = P / n_total_months;
                 totalInterest = 0;
             } else {
@@ -238,17 +236,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 totalInterest = (monthlyPayment * n_total_months) - P;
             }
             totalCost = P + totalInterest;
-        } else { // Has secondary interest period
+        } else { 
             const i1_annual = parseFloat(interestRateInput.value) / 100; 
             const i2_annual = parseFloat(secondaryInterestRateInput.value) / 100;
-            let k_months; // months for the first interest period
+            let k_months; 
             if (changeUnitSelect.value === 'years') {
                 k_months = parseFloat(changePeriodInput.value) * 12;
             } else {
                 k_months = parseFloat(changePeriodInput.value);
             }
 
-            if (isNaN(i2_annual) || i2_annual < 0) { // Allow 0 interest
+            if (isNaN(i2_annual) || i2_annual < 0) { 
                  alert('Por favor, introduce un tipo de interés posterior válido.');
                  secondaryInterestRateInput.focus(); return;
             }
@@ -259,44 +257,35 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const i1_monthly = i1_annual / 12;
             const i2_monthly = i2_annual / 12;
-            let M_temp_for_first_period_calc = 0; // This is the monthly payment if the *first* interest rate applied for the whole loan
-            
-            // Calculate a theoretical monthly payment as if the first interest rate applied for the whole period.
-            // This is a common way to start a two-part loan calculation (e.g., French amortization system)
-            // However, this M_temp is often just used to pay down the principal during the first period.
-            // The question is if the monthly payment is fixed for the first k_months, or if it changes.
-            // The code calculates M_temp and then calls it monthlyPayment, implying it's fixed for first period.
+            let M_temp_for_first_period_calc = 0; 
             
             if (i1_annual === 0) { 
-                // If first rate is 0, the monthly payment for that period is principal divided by total months.
-                // This might not be standard; usually, payment recalculates.
-                // For simplicity, let's assume the problem intends a flat payment for the first period based on i1 for n_total_months.
+               
                 M_temp_for_first_period_calc = P / n_total_months; 
             } else { 
-                // Standard calculation for a loan payment if i1_annual applied for n_total_months
+                
                 M_temp_for_first_period_calc = P * (i1_monthly * Math.pow(1 + i1_monthly, n_total_months)) / (Math.pow(1 + i1_monthly, n_total_months) - 1); 
             }
-            monthlyPayment = M_temp_for_first_period_calc; // This is the payment for the first k_months
+            monthlyPayment = M_temp_for_first_period_calc; 
             
             let outstandingBalance = P; 
             totalInterest = 0; 
 
-            // First period (k_months)
             for (let month = 1; month <= k_months; month++) {
-                if (outstandingBalance <= 0.005) { // Effectively paid off
+                if (outstandingBalance <= 0.005) { 
                     outstandingBalance = 0; 
                     break;
                 }
-                let currentPaymentForLoop = monthlyPayment; // Use the calculated fixed monthly payment
+                let currentPaymentForLoop = monthlyPayment; 
                 let interestForMonth = outstandingBalance * i1_monthly;
                 let principalPayment = currentPaymentForLoop - interestForMonth;
 
-                // Adjust if payment overshoots
+               
                 if (principalPayment > outstandingBalance) { 
                     principalPayment = outstandingBalance;
-                    // currentPaymentForLoop = outstandingBalance + interestForMonth; // Actual payment would be less
+                    
                 }
-                 if (outstandingBalance - principalPayment < 0 && outstandingBalance > 0) { // Defensive
+                 if (outstandingBalance - principalPayment < 0 && outstandingBalance > 0) { 
                     principalPayment = outstandingBalance;
                 }
                 
@@ -304,33 +293,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 totalInterest += interestForMonth;
             }
 
-            // Second period (remainingMonths)
+            
             const remainingMonths = n_total_months - k_months;
             if (outstandingBalance > 0.005 && remainingMonths > 0) {
-                let M2 = 0; // New monthly payment for the second period
-                if (i2_annual === 0) { // 0% interest for second period
+                let M2 = 0;
+                if (i2_annual === 0) { 
                     M2 = outstandingBalance / remainingMonths; 
                 } else { 
                     M2 = outstandingBalance * (i2_monthly * Math.pow(1 + i2_monthly, remainingMonths)) / (Math.pow(1 + i2_monthly, remainingMonths) - 1); 
                 }
-                // The `monthlyPayment` variable displayed is the one from the *first* period.
-                // The actual payments in the second period will be M2. This is a common way to represent mixed-rate loans.
-                // The `totalInterest` calculation correctly sums interest from both periods using respective payments.
                 
                 for (let month = 1; month <= remainingMonths; month++) {
                      if (outstandingBalance <= 0.005) {
                         outstandingBalance = 0;
                         break;
                     }
-                    let currentPaymentForLoop = M2; // Use the new monthly payment M2
+                    let currentPaymentForLoop = M2; 
                     let interestForMonth = outstandingBalance * i2_monthly;
                     let principalPayment = currentPaymentForLoop - interestForMonth;
 
                     if (principalPayment > outstandingBalance) {
                        principalPayment = outstandingBalance;
-                       // currentPaymentForLoop = outstandingBalance + interestForMonth;
+                       
                     }
-                     if (outstandingBalance - principalPayment < 0 && outstandingBalance > 0) { // Defensive
+                     if (outstandingBalance - principalPayment < 0 && outstandingBalance > 0) { 
                         principalPayment = outstandingBalance;
                     }
 
@@ -354,34 +340,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!chimneyArea) return; 
 
         const numHearts = 10;
-        // Clear previous hearts
+        
         while (chimneyArea.firstChild) {
             chimneyArea.removeChild(chimneyArea.firstChild);
         }
 
         for (let i = 0; i < numHearts; i++) {
             setTimeout(() => {
-                if (!chimneyArea) return; // Check again in case element is removed
+                if (!chimneyArea) return; 
                 const heart = document.createElement('div');
                 heart.classList.add('heart-particle');
                 
-                // Randomize horizontal explosion direction slightly more
-                const randomXPercentage = (Math.random() - 0.5) * 80; // -40% to +40%
+                const randomXPercentage = (Math.random() - 0.5) * 80; 
                 heart.style.setProperty('--random-x', `${randomXPercentage}%`);
                 
-                // Start hearts more centered above the chimney
-                heart.style.left = `${20 + Math.random() * 60}%`; // More spread initially
-                heart.style.top = `${50 + Math.random() * 40}%`;   // Start lower, appear to come from chimney
+                heart.style.left = `${20 + Math.random() * 60}%`; 
+                heart.style.top = `${50 + Math.random() * 40}%`;   
 
                 chimneyArea.appendChild(heart);
 
-                // Remove heart after animation to prevent buildup
                 heart.addEventListener('animationend', () => {
-                    if(heart && heart.parentNode === chimneyArea) { // Check if still child of chimneyArea
+                    if(heart && heart.parentNode === chimneyArea) { 
                          heart.remove();
                     }
-                }, { once: true }); // Use once: true for automatic listener removal
-            }, i * 120); // Stagger hearts
+                }, { once: true }); 
+            }, i * 120); 
         }
     }
 });
