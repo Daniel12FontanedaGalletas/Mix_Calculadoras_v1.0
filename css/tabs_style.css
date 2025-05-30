@@ -1,0 +1,61 @@
+/* css/tabs_style.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.tab-navigation {
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    background-color: #e9e9e9;
+    padding: 0 20px;
+    flex-shrink: 0;
+}
+
+.tab-navigation button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 20px;
+    transition: 0.3s;
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+}
+
+.tab-navigation button:hover {
+    background-color: #ddd;
+}
+
+.tab-navigation button.active {
+    background-color: #c63031;
+    color: white;
+}
+
+.calculator-iframe-container {
+    flex-grow: 1;
+    display: flex;
+    width: 100%;
+}
+
+.calculator-iframe { /* Estilos comunes para todos los iframes */
+    width: 100%;
+    height: 100%; 
+    border: none;
+}
+
+.mortgage-iframe {
+    min-height: 1670px; /* Mantenemos para hipoteca (considerando su contenido escalado) */
+}
+
+.retirement-iframe {
+    min-height: 1250px;  /* Ajustado para el contenido NO escalado de jubilación, con padding amplio */
+}

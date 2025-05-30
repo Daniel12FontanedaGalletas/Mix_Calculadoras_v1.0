@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras Financieras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/tabs_style.css">
+</head>
+<body>
+
+    <div class="tab-navigation">
+        <button class="tab-button active" onclick="openCalculator(event, 'mortgageCalc')">Calculadora de Hipoteca</button>
+        <button class="tab-button" onclick="openCalculator(event, 'retirementCalc')">Calculadora de Jubilación</button>
+    </div>
+
+    <div id="mortgageCalcWrapper" class="calculator-iframe-container">
+        <iframe src="mortgage_frame.html" class="calculator-iframe mortgage-iframe"></iframe>
+    </div>
+
+    <div id="retirementCalcWrapper" class="calculator-iframe-container" style="display: none;">
+        <iframe src="retirement_frame.html" class="calculator-iframe retirement-iframe"></iframe>
+    </div>
+
+    <script>
+        function openCalculator(evt, calculatorName) {
+            var i, calculatorContentWrappers, tabButtons;
+            calculatorContentWrappers = document.getElementsByClassName("calculator-iframe-container");
+            for (i = 0; i < calculatorContentWrappers.length; i++) {
+                calculatorContentWrappers[i].style.display = "none";
+            }
+            tabButtons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].className = tabButtons[i].className.replace(" active", "");
+            }
+            document.getElementById(calculatorName + "Wrapper").style.display = "block";
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.className += " active";
+            }
+        }
+        // Initialize the first tab
+        document.addEventListener('DOMContentLoaded', () => {
+            openCalculator(null, 'mortgageCalc'); 
+             var firstButton = document.querySelector('.tab-button');
+             if (firstButton && !firstButton.classList.contains('active')) {
+                 firstButton.className += ' active';
+             }
+        });
+    </script>
+
+</body>
+</html>

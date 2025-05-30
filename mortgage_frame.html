@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Hipoteca Avanzada</title>
+    <link rel="stylesheet" href="css/mortgage_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <header class="calculator-title-header">
+            <h1>Calculadora de hipoteca</h1>
+            <p>Simula tu préstamo hipotecario con opciones avanzadas.</p>
+        </header>
+
+        <div class="calculator-layout">
+            <form id="mortgage-form" class="form-section">
+                <div class="input-block">
+                    <label for="property-price" class="input-block-label">1. PRECIO DEL INMUEBLE (€)</label>
+                    <div class="input-controls">
+                        <div class="input-with-slider">
+                            <input type="number" id="property-price" value="250000" min="0" max="3000000" step="5000">
+                            <input type="range" id="property-price-range" value="250000" min="0" max="3000000" step="5000">
+                            <span class="range-value">250000 €</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-block">
+                    <label for="initial-capital" class="input-block-label">2. ENTRADA APORTADA (€)</label> 
+                    <div class="input-controls">
+                        <div class="input-with-slider">
+                            <input type="number" id="initial-capital" value="50000" min="0" max="1000000" step="1000"> 
+                            <input type="range" id="initial-capital-range" value="50000" min="0" max="1000000" step="1000">
+                            <span class="range-value">50000 €</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-block">
+                    <label for="interest-rate" class="input-block-label">3. TIPO DE INTERÉS ANUAL (%)</label>
+                    <div class="input-controls">
+                        <div class="input-with-slider">
+                            <input type="number" id="interest-rate" value="3.5" min="0" max="10" step="0.01">
+                            <input type="range" id="interest-rate-range" value="3.5" min="0" max="10" step="0.01">
+                            <span class="range-value">3.50 %</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-block">
+                    <label for="amortization-period" class="input-block-label">4. PLAZOS DE AMORTIZACIÓN</label>
+                    <div class="input-controls">
+                        <div class="input-with-select-and-slider">
+                            <input type="number" id="amortization-period" value="30" min="1" max="50">
+                            <select id="amortization-unit">
+                                <option value="years">Años</option>
+                                <option value="months">Meses</option>
+                            </select>
+                            <input type="range" id="amortization-period-range" value="30" min="1" max="50">
+                            <span class="range-value">30 Años</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-block secondary-interest-toggle">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="has-secondary-interest">
+                        <label for="has-secondary-interest">¿Y si cambia el tipo de interés después?</label>
+                    </div>
+                </div>
+
+                <div class="input-block optional-field" id="secondary-interest-block">
+                    <label for="secondary-interest-rate" class="input-block-label">TIPO DE INTERÉS POSTERIOR ANUAL (%)</label>
+                    <div class="input-controls">
+                        <div class="input-with-slider">
+                            <input type="number" id="secondary-interest-rate" value="4.0" min="0" max="10" step="0.01">
+                            <input type="range" id="secondary-interest-rate-range" value="4.0" min="0" max="10" step="0.01">
+                            <span class="range-value">4.00 %</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-block optional-field" id="change-period-block">
+                    <label for="change-period" class="input-block-label">AÑO O MES EN EL QUE CAMBIA EL INTERÉS</label>
+                    <div class="input-controls">
+                        <div class="input-with-select-and-slider">
+                            <input type="number" id="change-period" value="10" min="1" max="49">
+                            <select id="change-unit">
+                                <option value="years">Años</option>
+                                <option value="months">Meses</option>
+                            </select>
+                            <input type="range" id="change-period-range" value="10" min="1" max="49">
+                            <span class="range-value">10 Años</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-calculate">CALCULA</button>
+            </form>
+
+            <div class="house-section">
+                <div class="house-image-container">
+                    <div id="chimney-area"></div> 
+                    <div class="house-result-title">RESUMEN DE TU HIPOTECA</div>
+                    <div class="house-result-monthly">
+                        <span class="result-label">CUOTA MENSUAL</span>
+                        <span id="monthly-payment" class="result-value">0.00&nbsp;€</span>
+                    </div>
+                    <div class="house-result-interest">
+                        <span class="result-label">INTERESES TOTALES</span>
+                        <span id="total-interest" class="result-value">0.00&nbsp;€</span>
+                    </div>
+                    <div class="house-result-total">
+                        <span class="result-label">COSTO TOTAL DEL PRÉSTAMO</span>
+                        <span id="total-cost" class="result-value">0.00&nbsp;€</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/mortgage_script.js"></script>
+</body>
+</html>

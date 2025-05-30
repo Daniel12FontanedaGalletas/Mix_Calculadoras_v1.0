@@ -1,0 +1,352 @@
+/* css/retirement_style.css */
+:root {
+    --primary-bg: #fff9e6;
+    --text-red: #c63031;
+    --input-label-bg: #f58220;
+    --input-label-text: #ffffff;
+    --button-bg: #273b7a;
+    --button-text: #ffffff;
+    --text-color-dark: #333333;
+    --slider-thumb-color: var(--text-red);
+    --slider-track-color: #ddd;
+    --font-family-main: 'Poppins', sans-serif;
+    --border-color: #dee2e6;
+    --header-bg-color: #fff5ee;
+    --results-bg-color: #f8f9fa;
+    --results-label-color: #2a5270;
+    --main-container-border-radius: 15px;
+    --main-container-border-width: 3px;
+    --main-container-padding-horizontal: 30px; 
+}
+
+html {
+    height: 100%; 
+    background-color: var(--primary-bg); 
+    box-sizing: border-box;
+    overflow-y: auto; 
+}
+
+body {
+    font-family: var(--font-family-main);
+    margin: 0;
+    padding: 15px; 
+    background-color: var(--primary-bg); 
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0),
+        radial-gradient(circle at 10px 10px, rgba(0,0,0,0.03) 1px, transparent 0);
+    background-size: 20px 20px, 40px 40px;
+    color: var(--text-color-dark);
+    
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    
+    min-height: 100%; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.main-container {
+    background-color: #ffffff;
+    border-radius: var(--main-container-border-radius);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); 
+    padding: 20px var(--main-container-padding-horizontal) 0px var(--main-container-padding-horizontal); 
+    width: 100%; 
+    max-width: 1080px; 
+    border: var(--main-container-border-width) solid var(--text-red);
+    border-bottom: none; 
+    position: relative; 
+    /* overflow: hidden; */ /* Mantenido comentado como en la última versión */
+    margin: 0 auto; 
+    
+    /* transform: scale(0.9); */ /* Sin escalado, como en la última versión */
+    /* transform-origin: top; */
+}
+
+.calculator-title-header {
+    text-align: center;
+    margin-bottom: 22px; 
+    background-color: var(--header-bg-color);
+    padding: 14px 18px; 
+    border-radius: 6px;
+}
+
+.calculator-title-header h1 {
+    color: var(--text-red);
+    font-size: 2.5em; 
+    margin-bottom: 5px; 
+    font-weight: 700;
+}
+
+.calculator-title-header p {
+    color: #555555;
+    font-size: 1.5em; 
+    opacity: 0.9;
+    margin-top: 0;
+}
+
+.calculator-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px; 
+    align-items: flex-start; 
+    margin-bottom: 0; 
+    padding-bottom: 260px; 
+}
+
+.form-section {
+    flex: 1; 
+    min-width: 300px; 
+    max-width: 480px; 
+    display: flex;
+    flex-direction: column;
+    gap: 13px; 
+}
+
+.right-column-container {
+    flex: 1.2; 
+    min-width: 300px; 
+    max-width: 530px; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+.input-block {
+    background-color: #f5f5f5;
+    padding: 10px 14px; 
+    border-radius: 7px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+}
+
+.input-block-label {
+    display: block;
+    color: var(--text-color-dark);
+    font-weight: 600;
+    margin-bottom: 8px; 
+    font-size: 0.85em; 
+    text-transform: uppercase;
+}
+
+.input-controls {
+    background-color: #fff;
+    padding: 10px; 
+    border-radius: 5px; 
+}
+
+.input-with-slider {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    flex-wrap: nowrap;
+}
+
+input[type="number"], select {
+    padding: 8px 10px; 
+    border: 1px solid var(--border-color);
+    border-radius: 4px; 
+    font-size: 0.9em; 
+    color: var(--text-color-dark);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="number"] {
+    width: 90px; 
+    text-align: right;
+}
+
+input[type="number"]:focus, select:focus {
+    border-color: var(--slider-thumb-color);
+    box-shadow: 0 0 0 2px rgba(198, 48, 49, 0.15); 
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex-grow: 1;
+    height: 6px; 
+    background: var(--slider-track-color);
+    border-radius: 3px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px; 
+    height: 18px; 
+    border-radius: 50%;
+    background: var(--slider-thumb-color);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--slider-thumb-color);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.range-value {
+    font-weight: 600;
+    color: var(--slider-thumb-color);
+    min-width: 70px; 
+    text-align: right;
+    font-size: 0.9em; 
+}
+
+.calculate-button-area {
+    display: flex;
+    justify-content: center; 
+    width: 100%; 
+}
+
+.btn-calculate {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    padding: 12px 24px; 
+    border: none;
+    border-radius: 7px; 
+    font-size: 1.0em; 
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    
+    position: relative; 
+    z-index: 10;      
+    top: 12px; 
+}
+
+.btn-calculate:hover {
+    background-color: #1e2c5f;
+    transform: translateY(-2px);
+}
+
+.retirement-results-display {
+    background-color: var(--results-bg-color);
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.results-main-title {
+    color: var(--text-red);
+    font-size: 1.3em; 
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px; 
+    text-transform: uppercase;
+}
+
+.result-item {
+    background-color: #ffffff;
+    padding: 13px; 
+    border-radius: 7px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.result-item .result-label {
+    font-size: 0.9em; 
+    color: var(--results-label-color);
+    font-weight: 600;
+    margin-bottom: 5px; 
+    text-transform: uppercase;
+}
+
+.result-item .result-value {
+    font-size: 1.25em; 
+    color: var(--text-red);
+    font-weight: 700;
+}
+
+.calculator-brand-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0; /* AJUSTADO: Alinea con el borde izquierdo del área de padding del .main-container */
+    right: 0; /* AJUSTADO: Alinea con el borde derecho del área de padding del .main-container */
+    /* La imagen interior (width: 100%) llenará este espacio. */
+    padding: 0;
+    margin: 0;
+    line-height: 0; 
+    z-index: 5; 
+}
+
+.calculator-brand-footer img {
+    width: 100%; 
+    height: auto;
+    display: block; 
+    border-bottom-left-radius: var(--main-container-border-radius); 
+    border-bottom-right-radius: var(--main-container-border-radius);
+    /* Si el footer ahora es más estrecho que el .main-container, puede que quieras que los radios de la imagen sean 0 */
+    /* o que coincidan con los radios del .main-container si la imagen se extiende a los bordes del padding. */
+    /* De momento, mantenemos los radios originales de la imagen. */
+}
+
+/* Media Queries originales */
+@media (max-width: 1200px) {
+    .calculator-layout {
+        flex-direction: column; 
+        align-items: center; 
+    }
+    .form-section, .right-column-container { 
+        width: 100%;
+        max-width: 560px; 
+        flex: none; 
+    }
+    .right-column-container {
+        margin-top: 0; 
+    }
+    .retirement-results-display {
+        margin-top: 0; 
+    }
+    .calculate-button-area {
+        padding-top: 0; 
+    }
+    .btn-calculate {
+        top: 10px; 
+    }
+}
+
+@media (max-width: 768px) {
+    .right-column-container {
+        gap: 15px; 
+    }
+    .btn-calculate {
+        top: 8px; 
+    }
+    .calculator-title-header h1 { font-size: 1.6em; } 
+    .calculator-title-header p { font-size: 0.9em; } 
+}
+
+@media (max-width: 480px) {
+    .calculator-layout {
+        gap: 15px; 
+    }
+    .right-column-container {
+        gap: 10px; 
+    }
+    .btn-calculate {
+        font-size: 0.95em; 
+        padding: 10px 20px; 
+        top: 5px; 
+    }
+    .calculator-title-header { padding: 10px 8px; }
+    .calculator-title-header h1 { font-size: 1.4em; } 
+    .calculator-title-header p { font-size: 0.85em; } 
+}
